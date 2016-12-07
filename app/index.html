@@ -5,19 +5,23 @@
   <meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1">
   <style>
   	/* make sure the loading assets are the first thing to load */
+  	html {
+  		margin-left: calc(100vw - 100%); /*fix scrollbar affecting layout*/
+  	}
   	html, body {
   		background-color: #e6e6e7;
   		overflow: hidden;
   	}
-	.pace {
+  	body, div, img {margin: 0; padding: 0;}
+	.loading {
 		width: 100%;
 		height: 100%;
 		user-select: none;
 		position: absolute;
 		z-index: 100;
 		background-color: #e6e6e7;
-		transition: opacity 0.5s;
-		-webkit-transition: opacity 0.5s;
+		transition: opacity 0.7s;
+		-webkit-transition: opacity 0.7s;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -37,7 +41,7 @@
 			transform: rotate(0deg);
 		}
 	}
-	.pace .snowflake {
+	.loading .snowflake {
 		animation: spin 3s ease infinite;
 		width: 80px;
 	}
@@ -45,7 +49,7 @@
 	.pace-running .content {
 		opacity: 1;
 	}
-	.pace-done .pace {
+	.pace-done .loading {
 		opacity: 0;
 		visibility: 0;
 		pointer-events: none;
@@ -63,7 +67,7 @@
   <title>Happy Holidays from Red Lion</title>
 </head>
 <body>
-	<div class="pace">
+	<div class="loading">
 		<img class="snowflake" src="./images/snowflake.svg" />
 	</div>
 	<div class="content-wrapper">
@@ -71,8 +75,12 @@
 			<div class="foreground">
 				<div class="left">
 					<div class="copy">
-						<div class="holidays"></div>
-						<div class="scroll"></div>
+						<div class="holidays">
+							<img src="./images/happyholidays-left.png"/>
+						</div>
+						<div class="scroll">
+							<img src="./images/scroll-left.png">
+						</div>
 					</div>
 					<div class="door">
 						<img src="./images/door-top.png"/>
@@ -81,14 +89,21 @@
 				</div>
 				<div class="right">
 					<div class="copy">
-						<div class="holidays"></div>
-						<div class="scroll"></div>
+						<div class="holidays">
+							<img src="./images/happyholidays-right.png"/>
+						</div>
+						<div class="scroll">
+							<img src="./images/scroll-right.png">
+						</div>
 					</div>
 					<div class="door">
 						<img class="flip-x" src="./images/door-top.png"/>
 						<img class="flip-x" src="./images/door.jpg"/>
 					</div>
 				</div>
+			</div>
+			<div class="background">
+				<div class="inner"></div>
 			</div>
 		</div>
 	</div>

@@ -2,96 +2,123 @@ import '../vendor/zepto'
 import 'velocity-animate'
 import Service from '../services/Service'
 
+let Device = Service.Device()
+
 class Foreground {
 	constructor() {
 		this.state = {
-			'open': false,
-			'element': $('.foreground')
+			open: false,
+			element: $('.foreground')
 		}
+	}
+
+	IsOpen() {
+		return this.state.open
+	}
+
+	IsClosed() {
+		return !this.state.open
 	}
 
 	Open() {
 		if (this.state.open) return
 		this._animateDoors()
-		this._animateZoom()
+
+		if (Device.isMobile()) {
+			this._animateBlur()
+			this._animateZoom()
+		}
 		this.state.open = true
 	}
 
 	Close() {
 		if (!this.state.open) return
 		this._animateDoors()
-		this._animateZoom()
-		this._animateBlur()
+
+		if (Device.isMobile()) {
+			this._animateBlur()
+			this._animateZoom()
+		}
 		this.state.open = false
 	}
 
 	_animateBlur() {
-		var blur = 20,
+		var blur = 1.5,
 			easing = 'easeOutQuad',
 			duration = 1000,
-			temp
+			start, end
 
 		if (this.state.open) {
-			temp = 0
+			start = blur
+			end = 0
 		} else {
-			temp = blur
+			start = 0
+			end = blur
 		}
 
 		$(this.state.element).velocity({
-			blur: temp
+			blur: [end, start]
 		}, {
 			duration: duration,
-			easing: easing
+			easing: easing,
+			queue: false
 		})
 	}
 
 	_animateZoom() {
 		var scalePercent = 110,
-			easing = 'easeOutQuad',
+			easing = 'easeInOutQuint',
 			duration = 1000,
-			temp
+			start, end
 
 		if (this.state.open) {
-			temp = 1
+			end = 1
+			start = scalePercent / 100
 		} else {
-			temp = scalePercent / 100
+			end = scalePercent / 100
+			start = 1
 		}
 
 		$(this.state.element).velocity({
-			scaleX: temp,
-			scaleY: temp
+			scaleX: [end, start],
+			scaleY: [end, start]
 		}, {
 			duration: duration,
-			easing: easing
+			easing: easing,
+			queue: false
 		})
 	}
 
 	_animateDoors() {
-		var translatePercent = Service.Device().isMobile() ? 70 : 90,
-			easing = 'easeOutSine',
+		var translatePercent = Device.isMobile() ? 70 : 90,
+			easing = 'easeInOutQuint',
 			duration = 1000,
-			temp
+			end, start
 
 		if (this.state.open) {
-			temp = 0
+			start = translatePercent
+			end = 0
 		} else {
-			temp = translatePercent
+			start = 0
+			end = translatePercent
 		}
 
 		$(this.state.element).find('.left').velocity({
-			translateX: temp*-1 + '%'
+			translateX: [end*-1 + '%', start*-1 + '%']
 		}, {
 			duration: duration,
-			easing: easing
+			easing: easing,
+			queue: false
 		})
 
 		$(this.state.element).find('.right').velocity({
-			translateX: temp + '%'
+			translateX: [end + '%', start + '%']
 		}, {
 			duration: duration,
-			easing: easing
+			easing: easing,
+			queue: false
 		})
 	}
 }
 
-module.exports = new Foreground()
+module.exports = Foreground
