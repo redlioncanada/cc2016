@@ -1,0 +1,17 @@
+.rotate-n {transform: rotate(0deg)}
+.rotate-nw {transform: rotate(45deg)}
+.rotate-w {transform: rotate(90deg)}
+.rotate-sw {transform: rotate(135deg)}
+.rotate-s {transform: rotate(180deg)}
+.rotate-se {transform: rotate(225deg)}
+.rotate-e {transform: rotate(270deg)}
+.rotate-ne {transform: rotate(315deg)}
+
+.fadeout {
+	transition: opacity 0.3s ease-in-out;
+    opacity: 0;
+}
+
+.flip-x {
+	transform: scaleX(-1);
+}

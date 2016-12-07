@@ -1,0 +1,156 @@
+@import './variables.scss';
+@import './fonts.scss';
+@import './normalize.scss';
+@import './util.scss';
+@import './mixins.scss';
+@import './animations.scss';
+
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	min-height: 100%;
+}
+
+.content-wrapper {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+
+	.content {
+		max-width: $tablet;
+	}
+}
+
+.foreground {
+	width: 100%;
+	display: inline-block;
+
+	.door {
+		img {
+			display: block;
+		}
+	}
+
+	.left, .right {
+		width: 50%;
+		position: relative;
+	}
+
+	.left {
+		float: left;
+
+		.holidays, .scroll {
+			right: 0;
+		}
+
+		.holidays {
+			background-position: 240px 0;
+		}
+
+		.scroll {
+			background-position: 347px 0;
+		}
+	}
+
+	.right {
+		float: right;
+
+		.holidays, .scroll {
+			left: 0;
+		}
+
+		.holidays {
+			background-position: -144px 0;
+		}
+
+		.scroll {
+			background-position: -37px 0;
+		}
+	}
+
+	.holidays, .scroll {
+		position: absolute;
+		width: 100%;
+		background-size: contain !important;
+	}
+
+	.holidays {
+		background: url(../assets/images/happyholidays.png) no-repeat;
+		height: 260px;
+		@include vertical-center();
+	}
+
+	.scroll {
+		background: url(../assets/images/scroll.png) no-repeat;
+		height: 70px;
+		bottom: 15%;
+	}
+
+	.copy {
+		position: absolute;
+		width: 100%;
+		height: 100%;
+		z-index: 10;
+	}
+}
+
+@media(max-width: $tablet) {
+	.content-wrapper {
+		.content {
+			max-width: 100%;
+		}
+	}
+
+	.foreground {
+		height: 100%;
+
+		.left img, .right img {
+			width: auto;
+			height: 100%;
+			max-height: 100%;
+		}
+
+		.holidays {
+			background-size: 150% !important;
+			height: 610px;
+		}
+
+		.scroll {
+			height: 110px;
+		}
+
+		.left {
+			.holidays {
+				background-position: 85px 0;
+			}
+
+			.scroll {
+				background-position: 337px 0;
+			}
+
+			.door img {
+				float: right;
+			}
+		}
+
+		.right {
+			.holidays {
+				background-position: -310px 0;
+			}
+
+			.scroll {
+				background-position: -56px 0;
+			}
+
+			.door img {
+				float: left;
+			}
+		}
+	}
+}

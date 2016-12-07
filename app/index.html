@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1">
+  <style>
+  	/* make sure the loading assets are the first thing to load */
+  	html, body {
+  		background-color: #e6e6e7;
+  		overflow: hidden;
+  	}
+	.pace {
+		width: 100%;
+		height: 100%;
+		user-select: none;
+		position: absolute;
+		z-index: 100;
+		background-color: #e6e6e7;
+		transition: opacity 0.5s;
+		-webkit-transition: opacity 0.5s;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+	.page-inactive {display: none;}
+	.pace .pace-progress {
+		display: none;
+	}
+	@keyframes spin {
+		0% {
+			transform: rotate(0deg);
+		}
+		99.9999999999999% {
+			transform: rotate(360deg);
+		}
+		100% {
+			transform: rotate(0deg);
+		}
+	}
+	.pace .snowflake {
+		animation: spin 3s ease infinite;
+		width: 80px;
+	}
+	.content {opacity: 0;}
+	.pace-running .content {
+		opacity: 1;
+	}
+	.pace-done .pace {
+		opacity: 0;
+		visibility: 0;
+		pointer-events: none;
+	}
+	.pace-done .snowflake {
+		animation-play-state: paused;
+	}
+	.pace-done .content {
+		transition: opacity 1s;
+		-webkit-transition: opacity 1s;
+		opacity: 1;
+	}
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js"></script>
+  <title>Happy Holidays from Red Lion</title>
+</head>
+<body>
+	<div class="pace">
+		<img class="snowflake" src="./images/snowflake.svg" />
+	</div>
+	<div class="content-wrapper">
+		<div class="content">
+			<div class="foreground">
+				<div class="left">
+					<div class="copy">
+						<div class="holidays"></div>
+						<div class="scroll"></div>
+					</div>
+					<div class="door">
+						<img src="./images/door-top.png"/>
+						<img src="./images/door.jpg"/>
+					</div>
+				</div>
+				<div class="right">
+					<div class="copy">
+						<div class="holidays"></div>
+						<div class="scroll"></div>
+					</div>
+					<div class="door">
+						<img class="flip-x" src="./images/door-top.png"/>
+						<img class="flip-x" src="./images/door.jpg"/>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
