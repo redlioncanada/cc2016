@@ -28,22 +28,14 @@ $(() => {
 		var timeout
 
 		Scroll.OnScroll((e) => {
-			if (e.direction == Scroll.directions.DOWN && !Foreground.IsOpen()) {
-				Promise.all([
-					Foreground.Open(),
-					Background.Open()
-				]).then(() => {
-					timeout = setTimeout(() => Background.ShowText(), 1000)
-				})
-			} else if (e.direction == Scroll.directions.UP && Foreground.IsOpen()) {
-				clearTimeout(timeout)
+			Foreground.Animate(e.deltaY * -1)
+			Background.Animate(e.deltaY * -1)
 
-				Promise.all([
-					Foreground.Close(),
-					Background.Close()
-				]).then(() => {
-					Background.HideText()
-				})
+			if (Foreground.IsOpen()) {
+				timeout = setTimeout(() => {Background.ShowText()}, 1000)
+			} else if (Foreground.IsClosed()) {
+				// clearTimeout(timeout)
+				// Background.HideText()
 			}
 		})
 
