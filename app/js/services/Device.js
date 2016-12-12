@@ -1,6 +1,13 @@
 //determines which platform we're on, desktop/tablet/mobile/phone
 
 class Device {
+	constructor() {
+		this.devices = {
+			DESKTOP: 1,
+			PHONE: 2,
+			TABLET: 3
+		}
+	}
 	isMobile() {
 		var regex = navigator.userAgent.match(/Mobi/i)	//suggested string to use via mozilla docs
 		return !!regex && regex.length ? true : false
@@ -20,9 +27,9 @@ class Device {
 	}
 
 	type() {
-		if (this.isPhone()) return 'Phone'
-		else if (this.isTablet()) return 'Tablet'
-		else return 'Desktop'
+		if (this.isPhone()) return this.devices.PHONE
+		else if (this.isTablet()) return this.devices.TABLET
+		else return this.devices.DESKTOP
 	}
 }
 

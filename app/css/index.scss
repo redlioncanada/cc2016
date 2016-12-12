@@ -18,13 +18,24 @@ body {
 	position: relative;
 	width: 100%;
 	height: 100%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 
 	.content {
 		max-width: $tablet;
 		position: relative;
+		z-index: 2;
+		@include horizontal-center();
+	}
+
+	.content:after {
+		position: absolute;
+		content: "";
+		background: url(../assets/images/lines.svg) no-repeat 0 0;
+		background-size: contain;
+		width: 140%;
+		margin-left: -20%;
+		height: 100px;
+		bottom: -49px;
+		left: 0;
 	}
 }
 
@@ -43,6 +54,7 @@ body {
 	.left, .right {
 		width: 50%;
 		position: relative;
+		transform: translateX(0%);
 	}
 
 	.left {
@@ -50,14 +62,6 @@ body {
 
 		.holidays, .scroll {
 			right: 0;
-		}
-
-		.holidays {
-			// background-position: 240px 0;
-		}
-
-		.scroll {
-			// background-position: 347px 0;
 		}
 	}
 
@@ -67,14 +71,6 @@ body {
 		.holidays, .scroll {
 			left: 0;
 		}
-
-		.holidays {
-			// background-position: -144px 0;
-		}
-
-		.scroll {
-			// background-position: -37px 0;
-		}
 	}
 
 	.holidays, .scroll {
@@ -83,15 +79,11 @@ body {
 	}
 
 	.holidays {
-		// background: url(../assets/images/happyholidays_split.png) no-repeat;
-		// height: 260px;
 		width: 36.734693877551%;
 		@include vertical-center();
 	}
 
 	.scroll {
-		// background: url(../assets/images/scroll_split.png) no-repeat;
-		// height: 70px;
 		width: 9.821428571429%;
 		bottom: 15%;
 	}
@@ -111,18 +103,99 @@ body {
 	top: 0;
 	left: 0;
 	z-index: 1;
+	overflow: hidden;
 
 	.inner {
 		width: 100%;
 		height: 100%;
 		background-color: black;
+
+		.tree {
+			position: absolute;
+			height: inherit;
+			transform: scale(1.05);
+			display: inline-block;
+
+			img {
+				height: 100%;
+				width: initial;
+			}
+
+			.t1, .t2, .t3 {
+				position: absolute;
+				top: 0;
+				left: 0;
+			}
+
+			.t1 {
+				position: relative;
+				z-index: 1;
+			}
+
+			.t2 {
+				z-index: 2;
+				animation: fade-one 2s infinite;
+			}
+
+			.t3 {
+				z-index: 3;
+				animation: fade-two 2s infinite;
+			}
+		}
+
+		.wierd {
+			position: absolute;
+			bottom: 7%;
+			width: 36%;
+			@include horizontal-center();
+			z-index: 10;
+
+			img {
+				transition: 1s opacity;
+				transform: scaleZ(1);
+			}
+
+			.w2 {
+				margin-top: -5px;
+			}
+		}
 	}
+}
+
+.mobile-background {
+	display: none;
+
+	.inner img.tree {
+		transform: initial;
+		width: initial;
+		height: 100%;
+	}
+}
+
+.snowground {
+	z-index: 1;
+	left: 0;
+	top: 0;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	opacity: 0.5;
+	background: url(../assets/images/snow.png) no-repeat center 0 fixed;
+	background-size: auto 100%;
 }
 
 @media(max-width: $tablet) {
 	.content-wrapper {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
 		.content {
 			max-width: 100%;
+		}
+
+		.content:after {
+			content: initial;
 		}
 	}
 
@@ -136,14 +209,11 @@ body {
 		}
 
 		.holidays {
-			// background-size: 150% !important;
-			// height: 610px;
 			width: 69.333333333333%;
 			margin-right: 2px;
 		}
 
 		.scroll {
-			// height: 110px;
 			width: 18.4%;
 			bottom: 22%;
 		}
@@ -168,6 +238,18 @@ body {
 			}
 		}
 	}
+
+	.desktop-background {
+		display: none;
+	}
+
+	.mobile-background {
+		display: block;
+	}
+
+	.snowground {
+		display: none;
+	}
 }
 
 @media(max-width: $iphone6) {
@@ -176,6 +258,8 @@ body {
 	}
 
 	.foreground {
+		height: 99%;
+
 		.left, .right {
 			height: 100%;
 		}
@@ -184,33 +268,10 @@ body {
 			.door {
 				margin-left: 1px;
 			}
-
-			// .scroll {
-			// 	background-position: 146px 0;
-			// }
-
-			// .holidays {
-			// 	background-position: 44px 0;
-			// }
 		}
-
-		// .right {
-		// 	.scroll {
-		// 		background-position: -43px 0;
-		// 	}
-
-		// 	.holidays {
-		// 		background-position: -144px 0;
-		// 	}
-		// }
 
 		.scroll {
-			// height: 80px;
 			bottom: 11%;
-		}
-
-		.holidays {
-			// height: 300px;
 		}
 
 		.door {
@@ -219,6 +280,13 @@ body {
 
 		.door img:first-child {
 			height: initial;
+		}
+	}
+
+	.background {
+		.inner .wierd {
+			bottom: 8%;
+			width: 59%;
 		}
 	}
 }

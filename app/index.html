@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<!--  --._.--.--.__.--.--.__.--.--.__.--.--._.--.
+   _(_      _Y_      _Y_      _Y_      _Y_      _)_
+  [___]    [___]    [___]    [___]    [___]    [___]
+  /:' \    /:' \    /:' \    /:' \    /:' \    /:' \
+ |::   |  |::   |  |::   |  |::   |  |::   |  |::   |
+ \::.  /  \::.  /  \::.  /  \::.  /  \::.  /  \::.  /
+  \::./    \::./    \::./    \::./    \::./    \::./
+   '='      '='      '='      '='      '='      '=' -->
   <meta charset="UTF-8">
   <meta name=viewport content="width=device-width, initial-scale=1, maximum-scale=1">
   <style>
@@ -23,8 +31,12 @@
 		transition: opacity 0.7s;
 		-webkit-transition: opacity 0.7s;
 		display: flex;
+		display: -webkit-box;
+		display: -webkit-flex;
 		justify-content: center;
+		-webkit-justify-content: center;
 		align-items: center;
+		-webkit-align-items: center;
 	}
 	.page-inactive {display: none;}
 	.pace .pace-progress {
@@ -33,16 +45,36 @@
 	@keyframes spin {
 		0% {
 			transform: rotate(0deg);
+			-webkit-transform: rotate(0deg);
 		}
 		99.9999999999999% {
 			transform: rotate(360deg);
+			-webkit-transform: rotate(360deg);
 		}
 		100% {
 			transform: rotate(0deg);
+			-webkit-transform: rotate(0deg);
+		}
+	}
+	@-webkit-keyframes spin {
+		0% {
+			transform: rotate(0deg);
+			-webkit-transform: rotate(0deg);
+		}
+		99.9999999999999% {
+			transform: rotate(360deg);
+			-webkit-transform: rotate(360deg);
+		}
+		100% {
+			transform: rotate(0deg);
+			-webkit-transform: rotate(0deg);
 		}
 	}
 	.loading .snowflake {
 		animation: spin 3s ease infinite;
+		-webkit-animation-name: spin;
+		-webkit-animation-duration: 3s;
+		-webkit-animation-timing-function: ease;
 		width: 80px;
 	}
 	.content {opacity: 0;}
@@ -56,6 +88,7 @@
 	}
 	.pace-done .snowflake {
 		animation-play-state: paused;
+		-webkit-animation-play-state: paused;
 	}
 	.pace-done .content {
 		transition: opacity 1s;
@@ -102,10 +135,34 @@
 					</div>
 				</div>
 			</div>
-			<div class="background">
-				<div class="inner"></div>
+			<div class="background desktop-background">
+				<div class="inner">
+					<div class="tree">
+						<img class="t1" src="./images/tree.jpg"/>
+						<img class="t2 hide" src="./images/tree_1.png"/>
+						<img class="t3 hide" src="./images/tree_2.png"/>
+					</div>
+					<div class="wierd">
+						<img class="w1 hide" src="./images/keep-it-wierd-top.png"/>
+						<img class="w2 hide" src="./images/keep-it-wierd-bottom.png"/>
+					</div>
+				</div>
 			</div>
 		</div>
+		<div class="background mobile-background">
+			<div class="inner">
+				<div class="tree">
+					<img class="t1" src="./images/tree.jpg"/>
+					<img class="t2 hide" src="./images/tree_1.png"/>
+					<img class="t3 hide" src="./images/tree_2.png"/>
+				</div>
+				<div class="wierd">
+					<img class="w1 hide" src="./images/keep-it-wierd-top.png"/>
+					<img class="w2 hide" src="./images/keep-it-wierd-bottom.png"/>
+				</div>
+			</div>
+		</div>
+		<div class="snowground"></div>
 	</div>
 </body>
 </html>

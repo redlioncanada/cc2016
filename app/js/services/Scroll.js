@@ -14,6 +14,7 @@ class Scroll extends Observer {
 		this.interval = setInterval(() => {
 			if (!!window) {
 				window.addEventListener('mousewheel', this._onscroll.bind(this))
+				window.addEventListener('DOMMouseScroll', this._onscroll.bind(this))
 				window.addEventListener('touchmove', this._ontouch.bind(this))
 				clearTimeout(this.interval)
 			}

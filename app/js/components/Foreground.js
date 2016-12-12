@@ -1,6 +1,7 @@
 import '../vendor/zepto'
 import 'velocity-animate'
 import Service from '../services/Service'
+import Promise from 'bluebird'
 
 let Device = Service.Device()
 
@@ -22,24 +23,42 @@ class Foreground {
 
 	Open() {
 		if (this.state.open) return
-		this._animateDoors()
+		let promises = []
 
 		if (Device.isMobile()) {
-			this._animateBlur()
-			this._animateZoom()
+			promises = [
+				this._animateDoors(),
+				// this._animateBlur(),
+				this._animateZoom()
+			]
+		} else {
+			promises = [
+				this._animateDoors()
+			]
 		}
+
 		this.state.open = true
+		return Promise.all(promises)
 	}
 
 	Close() {
 		if (!this.state.open) return
-		this._animateDoors()
+		let promises = []
 
 		if (Device.isMobile()) {
-			this._animateBlur()
-			this._animateZoom()
+			promises = [
+				// this._animateBlur(),
+				this._animateZoom(),
+				this._animateDoors()
+			]
+		} else {
+			promises = [
+				this._animateDoors()
+			]
 		}
+
 		this.state.open = false
+		return Promise.all(promises)
 	}
 
 	_animateBlur() {
@@ -56,12 +75,15 @@ class Foreground {
 			end = blur
 		}
 
-		$(this.state.element).velocity({
-			blur: [end, start]
-		}, {
-			duration: duration,
-			easing: easing,
-			queue: false
+		return new Promise((resolve, reject) => {
+			$(this.state.element).velocity('stop').velocity({
+				blur: [end, start]
+			}, {
+				duration: duration,
+				easing: easing,
+				queue: false,
+				complete: resolve
+			})
 		})
 	}
 
@@ -79,18 +101,21 @@ class Foreground {
 			start = 1
 		}
 
-		$(this.state.element).velocity({
-			scaleX: [end, start],
-			scaleY: [end, start]
-		}, {
-			duration: duration,
-			easing: easing,
-			queue: false
+		return new Promise((resolve, reject) => {
+			$(this.state.element).velocity('stop').velocity({
+				scaleX: [end, start],
+				scaleY: [end, start]
+			}, {
+				duration: duration,
+				easing: easing,
+				queue: false,
+				complete: resolve
+			})
 		})
 	}
 
 	_animateDoors() {
-		var translatePercent = Device.isMobile() ? 70 : 90,
+		var translatePercent = Device.isMobile() ? Device.isTablet() ? 70 : 100 : 78,
 			easing = 'easeInOutQuint',
 			duration = 1000,
 			end, start
@@ -103,20 +128,30 @@ class Foreground {
 			end = translatePercent
 		}
 
-		$(this.state.element).find('.left').velocity({
-			translateX: [end*-1 + '%', start*-1 + '%']
-		}, {
-			duration: duration,
-			easing: easing,
-			queue: false
-		})
+		return new Promise((resolve, reject) => {
+			var complete = 0
 
-		$(this.state.element).find('.right').velocity({
-			translateX: [end + '%', start + '%']
-		}, {
-			duration: duration,
-			easing: easing,
-			queue: false
+			$(this.state.element).find('.left').velocity('stop').velocity({
+				translateX: [end*-1 + '%', start*-1 + '%']
+			}, {
+				duration: duration,
+				easing: easing,
+				queue: false,
+				complete: onComplete
+			})
+
+			$(this.state.element).find('.right').velocity('stop').velocity({
+				translateX: [end + '%', start + '%']
+			}, {
+				duration: duration,
+				easing: easing,
+				queue: false,
+				complete: onComplete
+			})
+
+			function onComplete() {
+				if (++complete == 2) resolve()
+			}
 		})
 	}
 }
