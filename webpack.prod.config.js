@@ -65,15 +65,25 @@ module.exports = {
   },
   plugins: [
     new webpack.DefinePlugin({
-      'process.env': {
-        'NODE_ENV': JSON.stringify('production')
-      }
+      'process.env.NODE_ENV': JSON.stringify('production')
     }),
     HTMLWebpackPluginConfig,
     new CommonsChunkPlugin("commons.chunk.js"),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.UglifyJsPlugin(),
+    new webpack.optimize.UglifyJsPlugin({
+       output: {
+          space_colon: false,
+          comments: function(node, comment) {
+              var text = comment.value;
+              var type = comment.type;
+              if (type == "comment2") {
+                  // multiline comment
+                  return /@copyright/i.test(text);
+              }
+          }
+      }
+    }),
   ],
   postcss: function () {
       return [precss, autoprefixer];

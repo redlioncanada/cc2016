@@ -13,18 +13,21 @@ class Background extends AnimateObject {
 			...this.state,
 			elements: {
 				main: Device.isMobile() ? $('.background') : $('.background .inner'),
-				textElement1: $('.background .wierd .w1'),
-				textElement2: $('.background .wierd .w2'),
+				textElement1: $('.background .message .w1'),
+				textElement2: $('.background .message .w2'),
+				textElement3: $('.background .message .w3'),
 				treeElement: $('.background .tree img')
 			},
-			resolution: 0.8
+			resolution: Device.isMobile() ? 5 : 0.8
 		}
 	}
 
 	ShowText() {
 		this.state.elements.textElement1.removeClass('hide')
+
 		this.textTimeout = setTimeout(() => {
 			this.state.elements.textElement2.removeClass('hide')
+			this.state.elements.textElement3.removeClass('hide')
 		}, 2500)
 	}
 
@@ -32,6 +35,7 @@ class Background extends AnimateObject {
 		clearTimeout(this.textTimeout)
 		this.state.elements.textElement1.addClass('hide')
 		this.state.elements.textElement2.addClass('hide')
+		this.state.elements.textElement3.addClass('hide')
 	}
 
 	_animateMain() {

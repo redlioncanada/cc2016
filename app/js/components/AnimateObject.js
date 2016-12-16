@@ -1,5 +1,4 @@
 import '../vendor/zepto'
-import 'velocity-animate'
 import Service from '../services/Service'
 import Promise from 'bluebird'
 
@@ -11,12 +10,13 @@ class AnimateObject {
 			percent: 0,
 			elements: {
 			},
-			resolution: 1
+			resolution: 1,
+			dirty: false
 		}
 	}
 
 	IsOpen() {
-		return this.state.percent >= 50
+		return this.state.percent >= 40
 	}
 
 	IsClosed() {
@@ -27,7 +27,12 @@ class AnimateObject {
 		return this.state.percent > 0 && this.state.percent < 100
 	}
 
+	IsDirty() {
+		return this.state.dirty
+	}
+
 	Animate(value) {
+		if (!this.state.dirty) this.state.dirty = true
 		if (!value || (this.state.percent == 100 && value > 0) || (this.state.percent == 0 && value < 0) || value == 0) return
 		this.state.percent += value * this.state.resolution
 		if (this.state.percent < 0) this.state.percent = 0

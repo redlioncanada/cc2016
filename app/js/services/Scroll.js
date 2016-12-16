@@ -29,6 +29,7 @@ class Scroll extends Observer {
 		if (!e) e = event;
   		e.direction = (e.detail<0 || e.wheelDelta>0) ? 1 : -1;
   		this.emit('scroll', e)
+  		e.preventDefault()
 	}
 
 	_ontouch(e) {

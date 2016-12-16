@@ -1,7 +1,6 @@
 "use strict"
 import Service from './services/Service'
 import './vendor/zepto'
-import 'velocity-animate'
 import Promise from 'bluebird'
 
 require('../../node_modules/normalize.scss/normalize.scss')
@@ -11,7 +10,11 @@ let Foreground = new (require('./components/Foreground'))(),
 	Background = new (require('./components/Background'))(),
 	DOMElement = Service.ElementCache(),
 	Scroll = Service.Scroll(),
-	Device = Service.Device()
+	Keypress = Service.Keypress(),
+	Device = Service.Device(),
+	Log = Service.Log()
+
+var timeout
 
 $(() => {
 	DOMElement.Cache('door tops', '.foreground .door img:first-child')
@@ -24,25 +27,50 @@ $(() => {
 	DOMElement.Cache('tree:desktop', '.desktop-background .tree')
 
 	Pace.on('done', () => {
-		console.log('finished loading')
-		var timeout
+		Log.Say('finished loading')
 
 		Scroll.OnScroll((e) => {
-			Foreground.Animate(e.deltaY * -1)
-			Background.Animate(e.deltaY * -1)
+			var value = 'deltaY' in e && e.deltaY !== 0 ? e.deltaY * -1 : e.direction
+			Log.Say(e.direction == Scroll.directions.DOWN ? 'scroll down' : 'scroll up')
+			animate(value)
+		})
 
-			if (Foreground.IsOpen()) {
-				timeout = setTimeout(() => {Background.ShowText()}, 1000)
-			} else if (Foreground.IsClosed()) {
-				// clearTimeout(timeout)
-				// Background.HideText()
+		Keypress.OnKey((key) => {
+			switch(key) {
+				case Keypress.keys.UP_ARROW:
+					Log.Say('arrow up')
+					animate(-4)
+					break
+				case Keypress.keys.DOWN_ARROW:
+					Log.Say('arrow down')
+					animate(4)
+					break
 			}
 		})
+
+		setTimeout(() => {
+			if (!Foreground.IsDirty()) {
+				Log.Say('dude, you gotta scroll')
+				animate(150)
+			}
+		}, 4500)
 
 		$(window).resize(onResize)
 		onResize()
 	})
 })
+
+function animate(value) {
+	Foreground.Animate(value)
+	Background.Animate(value)
+
+	if (Foreground.IsOpen()) {
+		timeout = setTimeout(() => {Background.ShowText()}, 1000)
+	} else if (Foreground.IsClosed()) {
+		// clearTimeout(timeout)
+		// Background.HideText()
+	}
+}
 
 function onResize() {
 	//make sure the door hinges are the same width as the doors themselves

@@ -116,11 +116,6 @@ body {
 			transform: scale(1.05);
 			display: inline-block;
 
-			img {
-				height: 100%;
-				width: initial;
-			}
-
 			.t1, .t2, .t3 {
 				position: absolute;
 				top: 0;
@@ -143,10 +138,10 @@ body {
 			}
 		}
 
-		.wierd {
+		.message {
 			position: absolute;
-			bottom: 7%;
-			width: 36%;
+			bottom: 2%;
+			width: 55%;
 			@include horizontal-center();
 			z-index: 10;
 
@@ -156,7 +151,11 @@ body {
 			}
 
 			.w2 {
-				margin-top: -5px;
+				margin-top: 17px;
+			}
+
+			.w3 {
+				margin-top: -3px;
 			}
 		}
 	}
@@ -169,6 +168,13 @@ body {
 		transform: initial;
 		width: initial;
 		height: 100%;
+	}
+
+	.inner .tree {
+		img {
+			height: 100%;
+			width: initial;
+		}
 	}
 }
 
@@ -246,8 +252,9 @@ body {
 	.mobile-background {
 		display: block;
 
-		.inner .wierd {
-			bottom: 10%;
+		.inner .message {
+			width: 60%;
+			bottom: 8%;
 		}
 	}
 
@@ -288,9 +295,16 @@ body {
 	}
 
 	.background {
-		.inner .wierd {
-			bottom: 8%;
-			width: 59%;
+		.inner .message {
+			bottom: 5%;
+			width: 85%;
+		}
+
+		.w1 {
+			margin-bottom: -3px;
+		}
+		.w3 {
+			margin-top: 13px;
 		}
 	}
 }

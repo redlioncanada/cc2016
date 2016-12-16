@@ -16,7 +16,7 @@ class Foreground extends AnimateObject {
 				doorLeft: $('.foreground .left'),
 				doorRight: $('.foreground .right')
 			},
-			resolution: 0.8
+			resolution: Device.isMobile() ? 5 : 0.8
 		}
 	}
 
